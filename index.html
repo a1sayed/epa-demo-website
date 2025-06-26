@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project OASIS - Transforming Tomorrow's Energy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-bg: #0a0e1a;
+            --secondary-bg: #1a1f2e;
+            --accent-blue: #00d4ff;
+            --accent-green: #00ff88;
+            --accent-gold: #ffd700;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a8b8;
+            --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #00ff88 100%);
+            --gradient-secondary: linear-gradient(135deg, #1a1f2e 0%, #2a3142 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 14, 26, 0.98);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: var(--primary-bg);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.9s both;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Floating Animation */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.3;
+        }
+
+        .floating-element:nth-child(2) {
+            background: var(--accent-green);
+            animation-delay: -2s;
+            left: 20%;
+            top: 20%;
+        }
+
+        .floating-element:nth-child(3) {
+            background: var(--accent-gold);
+            animation-delay: -4s;
+            left: 80%;
+            top: 60%;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            color: var(--text-secondary);
+        }
+
+        /* Innovation Grid */
+        .innovation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .innovation-card {
+            background: var(--gradient-secondary);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .innovation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .innovation-card:hover::before {
+            left: 100%;
+        }
+
+        .innovation-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-blue);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--gradient-secondary);
+            border-radius: 30px;
+            padding: 4rem;
+            margin: 4rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 4rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--gradient-primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            padding: 2rem;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            animation: slideIn 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            animation-delay: 0.2s;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            animation-delay: 0.4s;
+        }
+
+        .timeline-content {
+            padding: 2rem;
+            background: var(--gradient-secondary);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            position: relative;
+        }
+
+        .timeline-year {
+            color: var(--accent-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-bg);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo">OASIS</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#innovation">Innovation</a></li>
+                    <li><a href="#impact">Impact</a></li>
+                    <li><a href="#future">Future</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>OASIS</h1>
+                <div class="hero-subtitle">Offshore Advanced Sustainable Infrastructure Systems</div>
+                <p class="hero-description">
+                    Transforming decommissioned offshore oil rigs into cutting-edge renewable energy platforms. 
+                    A revolutionary approach to ocean-based clean energy generation that turns industrial legacy into sustainable future.
+                </p>
+                <a href="#about" class="cta-button">Discover the Future</a>
+            </div>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">Reimagining Ocean Energy</h2>
+            <p class="section-content">
+                Project OASIS represents a paradigm shift in renewable energy infrastructure. By retrofitting existing offshore oil platforms with advanced solar, wind, and wave energy systems, we're creating hybrid energy stations that maximize ocean real estate while minimizing environmental impact. Our innovative approach transforms stranded assets into profitable, sustainable energy hubs.
+            </p>
+            
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <div class="stat-label">Platforms Available</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">75%</span>
+                        <div class="stat-label">Cost Reduction</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">5GW</span>
+                        <div class="stat-label">Potential Capacity</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">90%</span>
+                        <div class="stat-label">Faster Deployment</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Innovation Section -->
+    <section id="innovation">
+        <div class="container">
+            <h2 class="section-title">Revolutionary Innovation</h2>
+            <p class="section-content">
+                Our multi-technology approach combines the best of renewable energy systems with proven offshore engineering, creating unprecedented efficiency and reliability in ocean-based power generation.
+            </p>
+            
+            <div class="innovation-grid">
+                <div class="innovation-card">
+                    <div class="card-icon">🌊</div>
+                    <h3 class="card-title">Wave Energy Integration</h3>
+                    <p class="card-description">
+                        Advanced wave energy converters integrated into existing platform structures, harnessing the ocean's constant motion to generate clean electricity 24/7.
+                    </p>
+                </div>
+                
+                <div class="innovation-card">
+                    <div class="card-icon">☀️</div>
+                    <h3 class="card-title">Floating Solar Arrays</h3>
+                    <p class="card-description">
+                        Innovative floating photovoltaic systems that adapt to ocean conditions, maximizing solar capture while protecting marine ecosystems below.
+                    </p>
+                </div>
+                
+                <div class="innovation-card">
+                    <div class="card-icon">💨</div>
+                    <h3 class="card-title">Offshore Wind Optimization</h3>
+                    <p class="card-description">
+                        Enhanced wind turbine systems designed specifically for retrofitted platforms, taking advantage of superior offshore wind resources.
+                    </p>
+                </div>
+                
+                <div class="innovation-card">
+                    <div class="card-icon">🔋</div>
+                    <h3 class="card-title">Smart Energy Storage</h3>
+                    <p class="card-description">
+                        Advanced battery systems and hydrogen production capabilities ensure continuous power delivery and grid stability.
+                    </p>
+                </div>
+                
+                <div class="innovation-card">
+                    <div class="card-icon">🌐</div>
+                    <h3 class="card-title">Digital Integration</h3>
+                    <p class="card-description">
+                        AI-powered monitoring and optimization systems that maximize energy output while predicting maintenance needs.
+                    </p>
+                </div>
+                
+                <div class="innovation-card">
+                    <div class="card-icon">🐟</div>
+                    <h3 class="card-title">Marine Restoration</h3>
+                    <p class="card-description">
+                        Integrated aquaculture and reef restoration programs that enhance biodiversity while generating additional revenue streams.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact">
+        <div class="container">
+            <h2 class="section-title">Sustainable Impact</h2>
+            <p class="section-content">
+                Project OASIS delivers measurable environmental and economic benefits, creating a new model for responsible energy transition that benefits all stakeholders.
+            </p>
+            
+            <div class="innovation-grid">
+                <div class="innovation-card">
+                    <div class="card-icon">🌍</div>
+                    <h3 class="card-title">Carbon Negative Operations</h3>
+                    <p class="card-description">
+                        Each converted platform eliminates more CO2 than it produces, contributing to global decarbonization goals while generating clean energy.
+                    </p>
+                </div>
+                
+                <div class="innovation-card">
+                    <div class="card-icon">💼</div>
+                    <h3 class="card-title">Job Creation</h3>
+                    <p class="card-description">
+                        Thousands of high-skilled jobs in engineering, maintenance, and marine operations, transitioning oil & gas workers to renewable careers.
+                    </p>
+                </div>
+                
+                <div class="innovation-card">
+                    <div class="card-icon">💰</div>
+                    <h3 class="card-title">Economic Opportunity</h3>
+                    <p class="card-description">
+                        Transform stranded assets worth billions into profitable renewable energy infrastructure with faster payback than new construction.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Timeline -->
+    <section id="future">
+        <div class="container">
+            <h2 class="section-title">Roadmap to the Future</h2>
+            <p class="section-content">
+                Our strategic timeline ensures rapid deployment and maximum impact, building toward a comprehensive network of ocean-based renewable energy systems.
+            </p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2025</div>
+                        <h3>Pilot Platform Launch</h3>
+                        <p>First OASIS platform goes operational with 50MW hybrid capacity, demonstrating commercial viability and environmental benefits.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2026-2027</div>
+                        <h3>Scale-Up Phase</h3>
+                        <p>Deploy 10 additional platforms across strategic locations, establishing supply chains and operational expertise at scale.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2028-2030</div>
+                        <h3>Network Expansion</h3>
+                        <p>100 converted platforms generating 5GW of clean energy, creating the world's largest offshore renewable energy network.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2030+</div>
+                        <h3>Global Leadership</h3>
+                        <p>International expansion with technology licensing, establishing OASIS as the global standard for platform conversion.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">OASIS</div>
+                <p>Transforming tomorrow's energy, today. Join us in building a sustainable future where innovation meets responsibility.</p>
+                <p style="margin-top: 1rem; color: var(--text-secondary);">
+                    © 2025 Project OASIS. Pioneering the future of offshore renewable energy.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Animate timeline items on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Add parallax effect to floating elements
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelectorAll('.floating-element');
+            
+            parallax.forEach((element, index) => {
+                const speed = 0.5 + (index * 0.1);
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Animate stats on scroll
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const targetValue = parseInt(stat.textContent);
+                let currentValue = 0;
+                const increment = targetValue / 50;
+                const timer = setInterval(() => {
+                    currentValue += increment;
+                    if (currentValue >= targetValue) {
+                        currentValue = targetValue;
+                        clearInterval(timer);
+                    }
+                    stat.textContent = Math.floor(currentValue) + (stat.textContent.includes('%') ? '%' : stat.textContent.includes('GW') ? 'GW' : '+');
+                }, 50);
+            });
+        }
+
+        // Trigger stats animation when section is visible
+        const statsObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateStats();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+    </script>
+</body>
+</html>
